@@ -5,6 +5,7 @@ import Select from "./Select";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import Avatar from "./Avatar";
+import Loader from "./Loader";
 
 import Error from "./Error";
 import ProtectedRoute from "./ProtectedRoute";
@@ -16,6 +17,7 @@ export {
   Select,
   Navbar,
   PostCard,
+  Loader,
   Avatar,
   Error,
   ProtectedRoute,

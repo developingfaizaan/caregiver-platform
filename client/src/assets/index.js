@@ -8,6 +8,7 @@ import editIcon from "./edit.svg";
 import deleteIcon from "./delete.svg";
 import locationIcon from "./location.svg";
 import formImg from "./form-img.png";
+import loader from "./loader.svg";
 
 export {
   logo,
@@ -20,4 +21,5 @@ export {
   locationIcon,
   editIcon,
   deleteIcon,
+  loader
 };
