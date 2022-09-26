@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:1337/" });
+const API = axios.create({ baseURL: "https://caregiver-platform-server.vercel.app/" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
