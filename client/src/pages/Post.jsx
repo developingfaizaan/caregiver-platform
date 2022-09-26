@@ -3,29 +3,27 @@ import { useState, useEffect } from "react";
 
 import { useAuth } from "../context/auth";
 import { fetchJob, deleteJob } from "../api";
-import { Button, Avatar } from "../components";
+import { Button, Avatar, Loader } from "../components";
 import { favoriteIcon, phoneIcon, facebookIcon, mailIcon, locationIcon, deleteIcon, editIcon } from "../assets";
 
 const PostPage = () => {
   const [error, setError] = useState();
   const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState("true");
   const { user } = useAuth();
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await fetchJob(id);
-
+    fetchJob(id)
+      .then(({data}) => {
         if (!data.job) return setError(data.message);
 
         setJob(data.job);
-      } catch (error) {
-        setError(error.response.data.message);
-      }
-    })();
+        setLoading(false);
+      })
+      .catch((error) => setError(error.response.data.message));
   }, [id]);
 
   const handleDelete = async () => {
@@ -56,8 +54,10 @@ const PostPage = () => {
           <Link to="/"><Button>Go to Home Page</Button></Link>
         </>
       )}
+ 
+      {loading && <Loader />}
 
-      {job && (
+      {!loading && job && (
         <>
           <header className="flex justify-between items-center">
             <div className="flex items-center gap-3">
