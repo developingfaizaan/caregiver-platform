@@ -1,6 +1,7 @@
 const User = require("../models/auth");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const { signupValidation, loginValidation } = require("../utils/validation.js");
 
@@ -77,4 +78,34 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login, signup };
+
+const updateProfilePhoto = async (req, res, next) => {
+  const { id } = req.params;
+  const { profilePhoto } = req.body;
+
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404);
+      throw new Error(`🔍 No user with id: ${id}`);
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error(`🔍 No user with id: ${id}`);
+    }
+
+    const updatedUser = { profilePhoto };
+
+    const newUser = await User.findByIdAndUpdate(id, updatedUser, { new: true });
+
+    res.json({ error: false, newUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+module.exports = { login, signup, updateProfilePhoto };

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import { fetchJobs } from "../api";
 import { PostCard, Loader } from "../components";
@@ -9,12 +8,12 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const { data } = await fetchJobs();
-      
-      setJobs(data.jobs.reverse());
-      setLoading(false);
-    })();
+    fetchJobs()
+      .then(({data}) => {
+        setJobs(data.jobs.reverse());
+        setLoading(false);
+      })
+      .catch((error) => console.log(error.response.data));
   }, []);
 
   return (
@@ -28,12 +27,7 @@ const HomePage = () => {
         </h1>
       )}
 
-      {jobs &&
-        jobs.map((job) => (
-          <Link to={`/job/${job._id}`} key={job._id}>
-            <PostCard job={job} />
-          </Link>
-        ))}
+      {jobs && jobs.map((job) => <PostCard job={job} key={job._id} /> )}
     </main>
   );
 };

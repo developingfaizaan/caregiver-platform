@@ -1,14 +1,21 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import FileBase from "react-file-base64";
 
-import { Error, PostCard } from "../components";
-import { profilePosts } from "../api";
+import { Error, PostCard, Loader, Button } from "../components";
+import { profilePosts, updateProfilePhoto } from "../api";
 import { nameInitialsGenerator } from "../utils";
+import { editIcon } from "../assets";
+import { useAuth } from "../context/auth";
 
 const ProfilePage = () => {
   const { id } = useParams();
+  const { user: currentUser } = useAuth();
   const [jobs, setJobs] = useState(null);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [image, setImage] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -21,24 +28,47 @@ const ProfilePage = () => {
         if (data.jobs.length === 0) return setError("No job posted by this user");
 
         setJobs(data.jobs.reverse());
+        setLoading(false);
       })
       .catch((error) => setError(error.response.data.message));
   }, [id]);
 
   if (!id) return <h1>No user with that ID</h1>;
 
+  const handleProfileChange = async () => {
+    const { data: { newUser } } = await updateProfilePhoto(id, { profilePhoto: image });
+
+    setEdit(false);
+    setUser({...user, profilePhoto: newUser.profilePhoto })
+  };
+
   return (
     <main className="w-full max-w-4xl my-20 mx-auto px-5 md:px-12 sm:px-32">
-      {user && (
+      
+      {loading && <Loader />}
+
+      {!loading && user && (
         <figure className="flex flex-col items-center gap-2">
-          <div className="inline-flex overflow-hidden relative justify-center items-center w-36 h-36 bg-primary rounded-full">
-           
+          <div className="inline-flex relative justify-center items-center w-36 h-36 bg-primary rounded-full">
             {user.profilePhoto ? (
-              <img className="object-cover h-36 w-36" src={user.profilePhoto} alt="Profile" />
+              <div>
+                <img className="rounded-full object-cover h-36 w-36" src={user.profilePhoto} alt="Profile" />
+              </div>
             ) : (
-              <span className="font-medium text-white">{nameInitialsGenerator(user.name)}</span>
+              <span className="font-medium text-white text-4xl">{nameInitialsGenerator(user.name)}</span>
             )}
+
+            { user._id === currentUser.user.id && 
+              <img onClick={() => setEdit((prev) => !prev)} className="absolute top-0 right-0 cursor-pointer" src={editIcon} title="Edit Profile Photo" alt="Edit Profile" />
+            }
           </div>
+
+          { edit && (
+            <>
+              <FileBase type="file" multiple={false} onDone={({ base64 }) => setImage(base64)} />
+              <Button onClick={handleProfileChange} styles="w-2/4">Update Photo</Button>
+            </>
+          )}
 
           <div className="flex flex-col items-center mb-24">
             <span className="text-xl my-1 font-medium">{user.name}</span>
@@ -49,12 +79,7 @@ const ProfilePage = () => {
 
       {error && <Error message={error} />}
 
-      {jobs &&
-        jobs.map((job) => (
-          <Link to={`/job/${job._id}`} key={job._id}>
-            <PostCard job={job} />
-          </Link>
-        ))}
+      {jobs && jobs.map((job) => <PostCard job={job} key={job._id} /> )}
     </main>
   );
 };

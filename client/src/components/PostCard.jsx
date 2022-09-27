@@ -22,17 +22,20 @@ const PostCard = ({ job }) => {
         </div>
       </header>
 
-      <div className="px-10">
-        <h3 className="text-xl mb-3 font-medium text-gray-900">{title}</h3>
-        <p className="mb-8 text-gray800 truncate">{description}</p>
-      </div>
+      <Link to={`/job/${job._id}`}>
+        <div className="px-10">
+          <h3 className="text-xl mb-3 font-medium text-gray-900">{title}</h3>
+          <p className="mb-8 text-gray800 truncate">{description}</p>
+        </div>
 
-      <div className="px-10 py-6 bg-primary flex justify-between items-center">
-        <h4 className="font-medium text-white text-lg">$23-34k /month</h4>
-        <button className="bg-white text-primary py-2 px-5 rounded-md">
-          Apply Now
-        </button>
-      </div>
+        <div className="px-10 py-6 bg-primary flex justify-between items-center">
+          <h4 className="font-medium text-white text-lg">$23-34k /month</h4>
+          <button className="bg-white text-primary py-2 px-5 rounded-md">
+            Apply Now
+          </button>
+        </div>
+      </Link>
+
     </article>
   );
 };
