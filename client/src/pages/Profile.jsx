@@ -58,7 +58,7 @@ const ProfilePage = () => {
               <span className="font-medium text-white text-4xl">{nameInitialsGenerator(user.name)}</span>
             )}
 
-            { user._id === currentUser.user.id && 
+            { user._id === currentUser?.user?.id && 
               <img onClick={() => setEdit((prev) => !prev)} className="absolute top-0 right-0 cursor-pointer" src={editIcon} title="Edit Profile Photo" alt="Edit Profile" />
             }
           </div>
