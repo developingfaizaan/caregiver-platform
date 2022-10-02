@@ -11,8 +11,6 @@ const signupValidation = (data) => {
     role: Joi.string().valid("caregiver", "family", "agency", "admin"),
 
     cardId: Joi.string().required(),
-
-    profilePhoto: Joi.string(),
   });
 
   return schema.validate(data);

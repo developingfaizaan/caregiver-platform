@@ -10,7 +10,7 @@ const signup = async (req, res, next) => {
 
   try {
     // Validation
-    const { error } = signupValidation({ name, email, password, role, cardId, profilePhoto });
+    const { error } = signupValidation({ name, email, password, role, cardId });
 
     if (error) {
       res.status(400);
