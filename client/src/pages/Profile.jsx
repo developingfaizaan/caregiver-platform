@@ -11,7 +11,7 @@ import { useAuth } from "../context/auth";
 const ProfilePage = () => {
   const { id } = useParams();
   const { user: currentUser } = useAuth();
-  const [jobs, setJobs] = useState(null);
+  const [jobs, setJobs] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
@@ -23,10 +23,10 @@ const ProfilePage = () => {
       .then(({ data }) => {
         setUser(data.user);
 
+        if (data.user.role === "caregiver") return setLoading(false);
+
         if (!data.jobs) return setError(data.message);
-
-        if (data.jobs.length === 0) return setError("No job posted by this user");
-
+        
         setJobs(data.jobs.reverse());
         setLoading(false);
       })
@@ -79,6 +79,11 @@ const ProfilePage = () => {
 
       {error && <Error message={error} />}
 
+      {loading === false && user.role !== "caregiver" && jobs.length === 0 && (
+        <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-9 text-center">No job posted by this user!</h2>
+        )
+      }
+      
       {jobs && jobs.map((job) => <PostCard job={job} key={job._id} /> )}
     </main>
   );
