@@ -55,7 +55,7 @@ const CreatePage = () => {
   return (
     <main className={`w-full max-w-4xl m-auto px-5 md:px-12 sm:px-32 py-20`}>
       <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-14">
-        Createa a Job Listing in seconds.
+        Create a Job Listing in seconds.
       </h1>
       {error && <Error message={error} />}
 

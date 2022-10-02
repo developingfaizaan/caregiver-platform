@@ -19,10 +19,10 @@ const Navbar = () => {
         {user ? (
           <>
             <NavLink to="/create" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Create</NavLink>
-            <NavLink to={`/user/${user.user.id}`} className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Profile</NavLink>
+            <NavLink to={`/user/${user?.user?.id}`} className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Profile</NavLink>
 
             <button onClick={logout} title="logout" className="flex items-center gap-2 bg-white200 p-3 rounded-md">
-              <h6 className="text-white700">{user.user.email}</h6>
+              <h6 className="text-white700">{user?.user?.email}</h6>
               <img src={logoutIcon} alt="Logout" />
             </button>
           </>

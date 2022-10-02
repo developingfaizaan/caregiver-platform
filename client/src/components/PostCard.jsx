@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 
 import { Avatar } from "./";
 import { favoriteIcon } from "../assets";
+import { useAuth } from "../context/auth";
 
 const PostCard = ({ job }) => {
   const { title, description, location, postedBy: { name, profilePhoto, _id: userId }} = job;
+  const { user } = useAuth();
 
   return (
     <article className="mb-16 bg-white rounded-lg shadow-sm overflow-hidden">
@@ -29,11 +31,13 @@ const PostCard = ({ job }) => {
         </div>
 
         <div className="px-10 py-6 bg-primary flex justify-between items-center">
-          <h4 className="font-medium text-white text-lg">$23-34k /month</h4>
-          <button className="bg-white text-primary py-2 px-5 rounded-md">
-            Apply Now
-          </button>
-        </div>
+        <h4 className="font-medium text-white text-lg">$23-34k /month</h4>
+        { user?.user?.id !== userId && (   
+            <button className="bg-white text-primary py-2 px-5 rounded-md">
+              Apply Now
+            </button>
+        )}
+          </div>
       </Link>
 
     </article>
