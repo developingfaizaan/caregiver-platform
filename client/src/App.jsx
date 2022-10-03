@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthProvider from "./context/auth";
 import { HomePage, CreatePage, PostPage, ProfilePage, Signup, Login } from "./pages";
-import { Navbar, ProtectedRoute } from "./components";
+import { Navbar, ProtectedRoute, RoleRoute } from "./components";
 
 const App = () => {
   return (
@@ -10,13 +10,16 @@ const App = () => {
       <AuthProvider>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={
+            <RoleRoute>
+              <HomePage />
+            </RoleRoute>
+          } />
           <Route path="/create" element={
-              <ProtectedRoute>
+            <ProtectedRoute>
                 <CreatePage />
-              </ProtectedRoute>
-            }
-          />
+            </ProtectedRoute>
+          } />
           <Route path="/job/:id" element={<PostPage />} />
           <Route path="/user/:id" element={<ProfilePage />} />
 

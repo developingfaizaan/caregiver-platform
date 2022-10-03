@@ -8,6 +8,7 @@ import Avatar from "./Avatar";
 import Loader from "./Loader";
 
 import Error from "./Error";
+import RoleRoute from "./RoleRoute";
 import ProtectedRoute from "./ProtectedRoute";
 
 export {
@@ -20,5 +21,6 @@ export {
   Loader,
   Avatar,
   Error,
+  RoleRoute,
   ProtectedRoute,
 };

@@ -10,7 +10,7 @@ import { useAuth } from "../context/auth";
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const { user: currentUser } = useAuth();
+  const { user: currentUser} = useAuth();
   const [jobs, setJobs] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

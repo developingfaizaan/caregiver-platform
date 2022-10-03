@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/auth";
 import { fetchJob, deleteJob } from "../api";
 import { Button, Avatar, Loader } from "../components";
-import { favoriteIcon, phoneIcon, facebookIcon, mailIcon, locationIcon, deleteIcon, editIcon } from "../assets";
+import { phoneIcon, facebookIcon, mailIcon, locationIcon, deleteIcon, editIcon } from "../assets";
 
 const PostPage = () => {
   const [error, setError] = useState();
@@ -66,10 +66,7 @@ const PostPage = () => {
               </Link>
             </div>
             <div className="flex gap-10 text-white700">
-              <button href="/" className="flex items-center gap-1">
-                <img src={favoriteIcon} alt="Favorite" />
-              </button>
-              
+                          
               {job.postedBy._id === user?.user?.id &&
               (location.pathname.startsWith("/user") ||
                 location.pathname.startsWith("/job")) ? (

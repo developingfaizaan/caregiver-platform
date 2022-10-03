@@ -14,11 +14,14 @@ const Navbar = () => {
       <Link to="/"><img src={logo} alt="Logo" /></Link>
 
       <nav className="flex gap-x-10 gap-y-5 py-5 items-center justify-center flex-wrap">
+      
+      { user && user?.user?.role !== "family" && user?.user?.role !== "agency" && 
         <NavLink to="/" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Home</NavLink>
+      }
 
         {user ? (
           <>
-          { user.user.role !== "caregiver" && <NavLink to="/create" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Create</NavLink> }
+          { user?.user?.role !== "caregiver" && <NavLink to="/create" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Create</NavLink> }
             <NavLink to={`/user/${user?.user?.id}`} className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Profile</NavLink>
 
             <button onClick={logout} title="logout" className="flex items-center gap-2 bg-white200 p-3 rounded-md">
