@@ -4,18 +4,25 @@ import { Avatar } from "./";
 import { useAuth } from "../context/auth";
 
 const PostCard = ({ job }) => {
-  const { title, description, location, postedBy: { name, profilePhoto, _id: userId }} = job;
-  const { user }= useAuth();
-
+  const {
+    title,
+    description,
+    createdAt,
+    payment,
+    postedBy: { name, profilePhoto, _id: userId },
+  } = job;
+  const { user } = useAuth();
 
   return (
     <article className="mb-16 bg-white rounded-lg shadow-sm overflow-hidden">
       <header className="flex justify-between items-center p-10">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Link to={`/user/${userId}`} title="Profile Page">
             <Avatar name={name} profilePhoto={profilePhoto} />
           </Link>
-          <small className="text-gray400">• {location}</small>
+          <small className="text-gray400">
+            • {new Date(createdAt).toLocaleDateString()}
+          </small>
         </div>
       </header>
 
@@ -26,16 +33,17 @@ const PostCard = ({ job }) => {
         </div>
 
         <div className="px-10 py-6 bg-primary flex justify-between items-center">
-        <h4 className="font-medium text-white text-lg">$23-34k /month</h4>
+          <h4 className="font-medium text-white text-lg">${payment}/day</h4>
 
-        { user && user?.user?.role !== "family" && user?.user?.role !== "agency" && (
-            <button className="bg-white text-primary py-2 px-5 rounded-md">
-              Apply Now
-            </button>
-        )}
-          </div>
+          {user &&
+            user?.user?.role !== "family" &&
+            user?.user?.role !== "agency" && (
+              <button className="bg-white text-primary py-2 px-5 rounded-md">
+                Apply Now
+              </button>
+            )}
+        </div>
       </Link>
-
     </article>
   );
 };

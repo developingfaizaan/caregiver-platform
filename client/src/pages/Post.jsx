@@ -130,7 +130,7 @@ const PostPage = () => {
           <div className="flex items-center gap-2 mt-10">
             <h4 className="text-lg">Price:</h4>
             <p className="font-semibold text-xl text-primary">
-              $ <span>{job.payment}</span> /day
+              $<span>{job.payment}</span>/day
             </p>
           </div>
 
