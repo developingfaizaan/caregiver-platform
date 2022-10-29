@@ -4,9 +4,11 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Input, Textarea, Button, Error, Select } from "../components";
 import { createJob, updateJob } from "../api";
 import { useAuth } from "../context/auth";
+import { useTranslate } from "../context/translate";
 
 const CreatePage = () => {
   const { user } = useAuth();
+  const { language } = useTranslate();
   const [job, setJob] = useState({ title: "", description: "", location: "", phoneNo: "", payment: "", germanLang: "beginner", postedBy: JSON.parse(localStorage.getItem("auth")).user.id });
   const [error, setError] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -33,8 +35,6 @@ const CreatePage = () => {
       } else {
         const { data } = await createJob(job);
 
-        console.log(data);
-
         if (data.error) return setError(data.message);
       }
 
@@ -55,19 +55,17 @@ const CreatePage = () => {
 
   return (
     <main className={`w-full max-w-4xl m-auto px-5 md:px-12 sm:px-32 py-20`}>
-      <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-14">
-        Create a Job Listing in seconds.
-      </h1>
+      <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-14">{language.CreateJob}!</h1>
       {error && <Error message={error} />}
 
       <form onSubmit={handleSubmit}>
-        <Input label="Title" type="text" value={job.title} onChange={(e) => setJob({ ...job, title: e.target.value })} />
-        <Textarea label="Description" type="text" value={job.description} onChange={(e) => setJob({ ...job, description: e.target.value })} />
-        <Input label="Location" type="text" value={job.location} onChange={(e) => setJob({ ...job, location: e.target.value })} />
-        <Input label="Contact - Phone Number" type="number" value={job.phoneNo} onChange={(e) => setJob({ ...job, phoneNo: e.target.value })} />
-        <Input label="Payment" type="number" value={job.payment} onChange={(e) => setJob({ ...job, payment: e.target.value })} />
-        <Select label="German Language Proficiency" value={job.germanLang} onChange={(e) => setJob({ ...job, germanLang: e.target.value })} items={["Beginner","Intermediate", "Advanced", "Fluent", "No, I don't know German"]} />
-        <Button type="submit">Create a Job Listing</Button>
+        <Input label={language.Title} type="text" value={job.title} onChange={(e) => setJob({ ...job, title: e.target.value })} />
+        <Textarea label={language.Description} type="text" value={job.description} onChange={(e) => setJob({ ...job, description: e.target.value })} />
+        <Input label={language.Location} type="text" value={job.location} onChange={(e) => setJob({ ...job, location: e.target.value })} />
+        <Input label={language.Contact} type="text" value={job.phoneNo} onChange={(e) => setJob({ ...job, phoneNo: e.target.value })} />
+        <Input label={language.Payment} type="number" value={job.payment} onChange={(e) => setJob({ ...job, payment: e.target.value })} />
+        <Select label={language.GermanLangProf} value={job.germanLang} onChange={(e) => setJob({ ...job, germanLang: e.target.value })} items={Object.values(language.germanLang)} itemValues={Object.keys(language.germanLang)} />
+        <Button type="submit">{language.CreateJob}</Button>
       </form>
     </main>
   );

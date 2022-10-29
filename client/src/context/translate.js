@@ -8,7 +8,7 @@ export const useTranslate = () => useContext(TranslateContext);
 
 const TranslateProvider = ({ children }) => {
   const [germanLang, setGermanLang] = useState(false);
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState(translation.english);
 
   useEffect(() => {
     if (germanLang) setLanguage(translation.german);

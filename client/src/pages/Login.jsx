@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({email: "", password: ""});
-
+   
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,7 +32,7 @@ const Login = () => {
         {error && <Error message={error} />}
 
         <form onSubmit={handleSubmit}>
-          <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <Input label={language.Email} type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           <Input label={language.Password} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           <Button type="submit">{language.LoginIntoYourAccount}</Button>
         </form>

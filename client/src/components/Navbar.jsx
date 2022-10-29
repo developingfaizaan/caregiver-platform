@@ -19,7 +19,7 @@ const Navbar = () => {
         {user &&
           user?.user?.role !== "family" &&
           user?.user?.role !== "agency" && (
-            <NavLink to="/" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>Home</NavLink>
+            <NavLink to="/" className="text-white700 hover:text-primary ease-out duration-200" style={generateActiveStyle}>{language.Home}</NavLink>
           )}
 
         {user ? (
