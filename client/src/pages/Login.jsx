@@ -3,17 +3,16 @@ import { useNavigate, Link } from "react-router-dom";
 
 import { Input, Button, Error } from "../components";
 import { useAuth } from "../context/auth";
+import { useTranslate } from "../context/translate";
 import { formImg } from "../assets";
 
 // TODO: Add Validation
 const Login = () => {
+  const { language } = useTranslate();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState({email: "", password: ""});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,34 +28,18 @@ const Login = () => {
   return (
     <main className="flex">
       <section className="w-full max-w-2xl m-auto px-5 md:px-12 sm:px-32 py-20">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-12">
-          Log in your account
-        </h1>
+        <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-12">{language.LoginIntoYourAccount}</h1>
         {error && <Error message={error} />}
 
         <form onSubmit={handleSubmit}>
-          <Input
-            label="Email"
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-          />
-
-          <Button type="submit">Login to your account</Button>
+          <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <Input label={language.Password} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          <Button type="submit">{language.LoginIntoYourAccount}</Button>
         </form>
 
         <p className="text-center my-7">
-          Don't have an account?
-          <Link to="/signup" className="text-blue-400 font-medium">
-            &nbsp;Create an account
-          </Link>
+          {language.DontHaveAnAccount}
+          <Link to="/signup" className="text-blue-400 font-medium">&nbsp;{language.CreateAnAccount}</Link>
         </p>
       </section>
 

@@ -2,6 +2,7 @@ import Button from "./Button";
 import Input from "./Input";
 import Textarea from "./Textarea";
 import Select from "./Select";
+import SwitchBtn from "./Switch";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import Avatar from "./Avatar";
@@ -16,6 +17,7 @@ export {
   Input,
   Textarea,
   Select,
+  SwitchBtn,
   Navbar,
   PostCard,
   Loader,

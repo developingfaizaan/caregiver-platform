@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "https://caregiver-platform-server.vercel.app/",
-});
+const API = axios.create({ baseURL: "https://caregiver-platform-server.vercel.app/" });
 // const API = axios.create({ baseURL: "http://localhost:1337/" });
 
 API.interceptors.request.use((req) => {
