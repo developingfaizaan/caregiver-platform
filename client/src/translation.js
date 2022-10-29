@@ -28,6 +28,7 @@ const translation = {
     GermanLangProf: "Deutsche Sprachkenntnisse",
     // Post Page
     ContactInfo: "Kontaktinformationen",
+    LoginToSeeDetails: "Melden Sie sich an, um die Kontaktdaten anzuzeigen",
     // Select Dropdown
     germanLang: {
       Beginner: "Anfänger",
@@ -68,13 +69,9 @@ const translation = {
     Contact: "Contact - Phone Number",
     Payment: "Payment",
     GermanLangProf: "German Language Proficiency",
+    // Post Page
     ContactInfo: "Contact Information",
-     // Select Dropdown
-    Beginner: "Beginner",
-    Intermediate: "Intermediate",
-    Advanced: "Advanced",
-    Fluent: "Fluent",
-    No: "No, I don't know German",
+    LoginToSeeDetails: "Login to see contact details",
     // Select Dropdown
     germanLang: {
       Beginner: "Beginner",

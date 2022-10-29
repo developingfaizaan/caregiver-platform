@@ -123,7 +123,7 @@ const PostPage = () => {
             </div>
           ) : (
             <div className="my-10">
-              <Link to="/login"><Button>Login to see contact details</Button></Link>
+              <Link to="/login"><Button>{language.LoginToSeeDetails}</Button></Link>
             </div>
           )}
         </>
