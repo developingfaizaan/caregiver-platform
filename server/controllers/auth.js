@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
-const { signupValidation, loginValidation } = require("../utils/validation.js");
+const { signupValidation, loginValidation } = require("../utils/authValidation.js");
 
 const signup = async (req, res, next) => {
   const { name, email, password, role, cardId, profilePhoto } = req.body;

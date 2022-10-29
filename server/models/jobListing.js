@@ -23,8 +23,16 @@ const jobListingSchema = mongoose.Schema(
       required: true,
     },
 
-    facebookId: {
+    payment: {
+      type: Number,
+      required: true
+    },
+
+    germanLang: {
       type: String,
+      enum: ["no", "beginner", "intermediate", "advanced", "fluent"],
+      default: "no",
+      required: true,
     },
 
     postedBy: {

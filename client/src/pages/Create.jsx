@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
-import { Input, Textarea, Button, Error } from "../components";
+import { Input, Textarea, Button, Error, Select } from "../components";
 import { createJob, updateJob } from "../api";
 import { useAuth } from "../context/auth";
 
 const CreatePage = () => {
   const { user } = useAuth();
-  const [job, setJob] = useState({ title: "", description: "", location: "", phoneNo: "", facebookId: "", postedBy: JSON.parse(localStorage.getItem("auth")).user.id });
+  const [job, setJob] = useState({ title: "", description: "", location: "", phoneNo: "", payment: "", germanLang: "beginner", postedBy: JSON.parse(localStorage.getItem("auth")).user.id });
   const [error, setError] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const locationUrl = useLocation();
@@ -17,15 +17,14 @@ const CreatePage = () => {
     if (locationUrl.state) {
       setIsUpdating(true);
 
-      const { title, description, location, phoneNo, facebookId } = locationUrl.state;
+      const { title, description, location, phoneNo, payment, germanLang } = locationUrl.state;
 
-      setJob({ title,description,location,phoneNo,facebookId,postedBy: JSON.parse(localStorage.getItem("auth")).user.id });
+      setJob({ title, description, location, phoneNo, payment, germanLang, postedBy: JSON.parse(localStorage.getItem("auth")).user.id });
     }
   }, [locationUrl.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (isUpdating) {
         const { data } = await updateJob(locationUrl.state._id, job);
@@ -34,10 +33,12 @@ const CreatePage = () => {
       } else {
         const { data } = await createJob(job);
 
+        console.log(data);
+
         if (data.error) return setError(data.message);
       }
 
-      navigate("/");
+      navigate(`/user/${user.user.id}`);
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -63,8 +64,9 @@ const CreatePage = () => {
         <Input label="Title" type="text" value={job.title} onChange={(e) => setJob({ ...job, title: e.target.value })} />
         <Textarea label="Description" type="text" value={job.description} onChange={(e) => setJob({ ...job, description: e.target.value })} />
         <Input label="Location" type="text" value={job.location} onChange={(e) => setJob({ ...job, location: e.target.value })} />
-        <Input label="Contact - Phone Number" type="text" value={job.phoneNo} onChange={(e) => setJob({ ...job, phoneNo: e.target.value })} />
-        <Input label="Contact - Facebook Id" type="text" value={job.facebookId} onChange={(e) => setJob({ ...job, facebookId: e.target.value })} />
+        <Input label="Contact - Phone Number" type="number" value={job.phoneNo} onChange={(e) => setJob({ ...job, phoneNo: e.target.value })} />
+        <Input label="Payment" type="number" value={job.payment} onChange={(e) => setJob({ ...job, payment: e.target.value })} />
+        <Select label="German Language Proficiency" value={job.germanLang} onChange={(e) => setJob({ ...job, germanLang: e.target.value })} items={["Beginner","Intermediate", "Advanced", "Fluent", "No, I don't know German"]} />
         <Button type="submit">Create a Job Listing</Button>
       </form>
     </main>

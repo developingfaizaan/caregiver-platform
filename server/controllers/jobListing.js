@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const JobListing = require("../models/jobListing");
 const User = require("../models/auth");
+const { createJobValidation } = require("../utils/jobValidation")
 
 const getJobs = async (req, res, next) => {
   try {
@@ -45,18 +46,25 @@ const getJob = async (req, res, next) => {
 };
 
 const createJob = async (req, res, next) => {
-  const { title, description, location, phoneNo, facebookId, postedBy } = req.body;
-
-  // TODO: Validate Input
+  const { title, description, location, phoneNo, payment, germanLang, postedBy } = req.body;
+ 
   try {
-    const user = await User.findById(req.userId);
+    // Validation
+    const { error } = createJobValidation({ title, description, location, phoneNo, payment, germanLang: germanLang.toLowerCase() });
 
+    if (error) {
+      res.status(400);
+      throw new Error(error.details[0].message);
+    }
+
+    const user = await User.findById(req.userId);
+    
     if (user.role === "caregiver") {
       res.status(403);
       throw new Error(`❌ Caregiver role cannot post a job!`);
     }
-
-    const newJob = await JobListing.create({ title, description, location, phoneNo, facebookId, postedBy });
+    
+    const newJob = await JobListing.create({ title, description, location, phoneNo, payment, germanLang, postedBy });
 
     res.status(200).json({ error: false, post: newJob });
   } catch (error) {
@@ -66,27 +74,33 @@ const createJob = async (req, res, next) => {
 
 const updateJob = async (req, res, next) => {
   const { id } = req.params;
-  const { title, description, location, phoneNo, facebookId, postedBy } = req.body;
-
-  // TODO: Validate Input
+  
+  const { title, description, location, phoneNo, payment, germanLang, postedBy } = req.body;
 
   try {
+    // Validation
+    const { error } = createJobValidation({ title, description, location, phoneNo, payment, germanLang: germanLang.toLowerCase() });
+
+    if (error) {
+      res.status(400);
+      throw new Error(error.details[0].message);
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(404);
       throw new Error(`🔍 No Job with id: ${id}`);
     }
 
     const job = await JobListing.findById(id);
+
     if (!job) {
       res.status(404);
       throw new Error(`🔍 No Job with id: ${id}`);
     }
 
-    const updatedJob = { title, description, location, phoneNo, facebookId, postedBy, _id: id };
+    const updatedJob = { title, description, location, phoneNo, payment, germanLang, postedBy, _id: id };
 
-    const newJob = await JobListing.findByIdAndUpdate(id, updatedJob, {
-      new: true,
-    });
+    const newJob = await JobListing.findByIdAndUpdate(id, updatedJob, { new: true });
 
     res.json({ error: false, newJob });
   } catch (error) {

@@ -41,7 +41,7 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <Input label="Name" type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          <Select label="Profile Type" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} />
+          <Select label="Profile Type" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value.toLowerCase() })} items={["Caregiver", "Family", "Agency"]} />
           <Input label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           <Input label="ID from government-issued card" type="text" value={form.cardId} onChange={(e) => setForm({ ...form, cardId: e.target.value })} />
           <div className="my-7">
