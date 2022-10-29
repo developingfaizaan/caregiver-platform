@@ -1,11 +1,21 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactGA from 'react-ga';
 
 import AuthProvider from "./context/auth";
 import TranslateProvider from "./context/translate";
 import { HomePage, CreatePage, PostPage, ProfilePage, Signup, Login } from "./pages";
 import { Navbar, ProtectedRoute, RoleRoute } from "./components";
 
+const TRACKING_ID = "UA-247639881-1"; // OUR_TRACKING_ID
+
 const App = () => {
+  ReactGA.initialize(TRACKING_ID);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>
