@@ -30,10 +30,11 @@ const Signup = () => {
   return (
     <main className="flex">
       <section className="flex-1 w-full max-w-2xl m-auto px-5 md:px-12 sm:px-32 py-20">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-2">{language.CreateAnAccount}!</h1>
+        <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-5 sm:mb-4">{language.CreateAnAccount}!</h1>
         {error && <Error message={error} />}
+        <p className="text-center text-gray700">{language.BetaVersion}</p>
 
-        <p className="text-center my-10">
+        <p className="text-center mt-6 mb-10">
           {language.AlreadyHaveAnAccount}
           <Link to="/login" className="text-blue-400 font-medium">&nbsp;{language.LoginIntoYourAccount}</Link>
         </p>
