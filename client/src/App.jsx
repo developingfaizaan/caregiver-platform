@@ -7,7 +7,7 @@ import TranslateProvider from "./context/translate";
 import { HomePage, CreatePage, PostPage, ProfilePage, Signup, Login } from "./pages";
 import { Navbar, ProtectedRoute, RoleRoute } from "./components";
 
-const TRACKING_ID = "UA-247639881-1"; // OUR_TRACKING_ID
+const TRACKING_ID = "G-QXCFL8LCEW"; // OUR_TRACKING_ID
 
 const App = () => {
   ReactGA.initialize(TRACKING_ID);
