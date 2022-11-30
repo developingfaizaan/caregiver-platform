@@ -17,11 +17,13 @@ app.use(morgan("dev"));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
 app.use(express.json());
+
 const corsOptions = {
-  origin: 'https://pflegebook.net/',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  origin: ["https://pflegebook.net/","https://caregiver-platform.vercel.app/","http://localhost:3000"],
+  optionsSuccessStatus: 200 // For legacy browser support
+} 
 app.use(cors(corsOptions));
+
 
 app.get("/", (req, res) => {
   res.json({

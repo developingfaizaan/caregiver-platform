@@ -13,7 +13,7 @@ const HomePage = () => {
         setJobs(data.jobs.reverse());
         setLoading(false);
       })
-      .catch((error) => console.log(error.response.data));
+      .catch((error) => console.log(error));
   }, []);
 
   return (
